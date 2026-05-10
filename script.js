@@ -27,9 +27,11 @@ function playGame() {
 
     for (let i = 0; i <= 4; i++) {
         let roundWinner = playRound(getHumanChoice(), getComputerChoice())
-        roundWinner ? roundWinner === "human" ? humanScore++ : computerScore++ : null;
+        roundWinner ? (roundWinner === "human" ? humanScore++ : computerScore++) : null;
         displayScore(humanScore, computerScore)
     }
+
+    displayWinner(humanScore, computerScore);
 }
 
 function playRound(humanChoice, computerChoice) {
@@ -55,13 +57,21 @@ function getComputerChoice() {
 }
 
 function getHumanChoice() {
-    let humanChoice = window.prompt("Choose your weapon! [Rock, Paper, Scissors]");
-    humanChoice = humanChoice.trim().toLowerCase();
+    let humanChoice = window.prompt("Choose your weapon! [Rock, Paper, Scissors]").trim().toLowerCase();
+
+    while (selection[humanChoice] === undefined) {
+        humanChoice = window.prompt("Choose a valid weapon! [Rock, Paper, Scissors]").trim().toLowerCase();
+    }
+
     return selection[humanChoice];
 }
 
 function displayScore(humanScore, computerScore) {
     console.log(`Human: ${humanScore} Computer: ${computerScore}`);
+}
+
+function displayWinner(humanScore, computerScore) {
+    humanScore == computerScore ? console.log("It's a Draw!") : (humanScore > computerScore ? console.log("You win! Congratulations!") : console.log("You lose! Try again!"));
 }
 
 playGame()
