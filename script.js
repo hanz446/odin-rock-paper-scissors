@@ -1,25 +1,21 @@
 
-const rock = {
-    self: "Rock",
-    winsTo: "Scissors",
-    losesTo: "Paper"
+const handSelection = {
+    rock: {
+        self: "Rock",
+        winsTo: "Scissors",
+        losesTo: "Paper"
+    },
+    paper: {
+        self: "Paper",
+        winsTo: "Rock",
+        losesTo: "Scissors"
+    },
+    scissors: {
+        self: "Scissors",
+        winsTo: "Paper",
+        losesTo: "Rock"
+    }
 };
-const paper = {
-    self: "Paper",
-    winsTo: "Rock",
-    losesTo: "Scissors"
-};
-const scissors = {
-    self: "Scissors",
-    winsTo: "Paper",
-    losesTo: "Rock"
-};
-const selection = {
-    rock: rock,
-    paper: paper,
-    scissors: scissors
-};
-const choices = [rock, paper, scissors];
 
 function playGame() {
     let humanScore = 0;
@@ -52,18 +48,19 @@ function playRound(humanChoice, computerChoice) {
 }
 
 function getComputerChoice() {
-    let computerChoice = choices[Math.floor(Math.random() * 3)];
-    return computerChoice;
+    const choices = ["rock", "paper", "scissors"]
+    const computerChoice = choices[Math.floor(Math.random() * 3)];
+    return handSelection[computerChoice];
 }
 
 function getHumanChoice() {
     let humanChoice = window.prompt("Choose your weapon! [Rock, Paper, Scissors]").trim().toLowerCase();
 
-    while (selection[humanChoice] === undefined) {
+    while (handSelection[humanChoice] === undefined) {
         humanChoice = window.prompt("Choose a valid weapon! [Rock, Paper, Scissors]").trim().toLowerCase();
     }
 
-    return selection[humanChoice];
+    return handSelection[humanChoice];
 }
 
 function displayScore(humanScore, computerScore) {
