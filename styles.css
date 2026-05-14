@@ -1,0 +1,173 @@
+* {
+    /* outline: 2px solid red; */
+    margin: 0px;
+    padding: 0px;
+    font-family: "Manrope", sans-serif;
+    color: var(--text);
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-dark: oklch(0.1 0.025 305);
+    --bg: oklch(0.15 0.025 305);
+    --bg-light: oklch(0.2 0.025 305);
+    --text: oklch(0.96 0.05 305);
+    --text-muted: oklch(0.76 0.05 305);
+    --highlight: oklch(0.5 0.05 305);
+    --border: oklch(0.4 0.05 305);
+    --border-muted: oklch(0.3 0.05 305);
+    --primary: oklch(0.76 0.1 305);
+    --secondary: oklch(0.76 0.1 125);
+    --danger: oklch(0.7 0.05 30);
+    --warning: oklch(0.7 0.05 100);
+    --success: oklch(0.7 0.05 160);
+    --info: oklch(0.7 0.05 260);
+    interpolate-size: allow-keywords;
+}
+
+body {
+    background-color: var(--bg-dark);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+h1 {
+    font-size: 4rem;
+    transition: font-size 0.5s ease;
+}
+h1.ongoing {
+    font-size: 2.5rem
+}
+
+#game-display {
+    flex: 0 1 500px;
+    aspect-ratio: 1;
+    background-color: var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    visibility: hidden;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.5s, visibility 0.5s, max-height 0.5s, background-color 0.3s ease;
+}
+#game-display.ongoing {
+    visibility: visible;
+    opacity: 1;
+    max-height: 500px;
+}
+#game-display.ongoing.win {
+    background-color: oklch(0.6 0.05 160);
+}
+#game-display.ongoing.lose {
+    background-color: oklch(0.6 0.05 30);
+}
+
+#score-container {
+    flex-shrink: 1;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-wrap-mode: nowrap;
+}
+
+#comp-choice-container {
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+}
+#comp-choice-label {
+    flex: 0 1 auto;
+    text-align: center;
+    padding-bottom: 2rem;
+}
+#comp-choice-display {
+    background-color: var(--bg-light);
+    flex: 0 1 auto;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--border-muted);
+    border-radius: 2rem;
+    font-size: 3rem;
+}
+#comp-choice-display.win {
+    background-color: oklch(0.8 0.05 160);
+    border: none;
+}
+#comp-choice-display.lose {
+    background-color: oklch(0.8 0.05 30);
+    border: none;
+}
+
+#result-display {
+    height: 1rem;
+}
+
+#button-container {
+    flex-shrink: 1;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+}
+
+.selection {
+    flex-shrink: 1;
+    background-color: var(--primary);
+    padding: 0.5rem;
+    font-size: 2.5rem;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.selection.default:hover {
+    background-color: oklch(0.88 0.1 305);
+}
+.selection.win {
+    background-color: var(--success);
+}
+.selection.win:hover {
+    background-color: oklch(0.8 0.05 160);
+}
+.selection.lose {
+    background-color: var(--danger);
+}
+.selection.lose:hover {
+    background-color: oklch(0.8 0.05 30);
+}
+
+#play-game {
+    background-color: var(--primary);
+    width: fit-content;
+    padding: 0.5rem 1.5rem;
+    font-size: 2rem;
+    font-weight: 900;
+    border: none;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: background-color 0.5s ease, font-size 0.5s ease, width 0.5s ease;
+}
+#play-game:hover {
+    background-color: oklch(0.84 0.1 305);
+}
+#play-game.ongoing {
+    background-color: var(--secondary);
+    font-size: 1.2rem;
+}
+#play-game.ongoing:hover {
+    background-color: oklch(0.84 0.1 125);
+}
