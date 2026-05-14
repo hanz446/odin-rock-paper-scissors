@@ -9,6 +9,9 @@ class RpsGame {
         this.resultDisplay = document.getElementById("result-display");
         this.btnContainer = document.getElementById("button-container");
         this.selectionBtns = document.querySelectorAll(".selection");
+        this.rockBtn = document.getElementById("0");
+        this.paperBtn = document.getElementById("1");
+        this.scissorsBtn = document.getElementById("2");
         this.playBtn = document.getElementById("play-game");
 
         this.playBtn.addEventListener("click", (event) => this.handleClick(event));
@@ -17,18 +20,21 @@ class RpsGame {
         this.handSelection = {
             0: {
                 symbol: "👊",
+                button: this.rockBtn,
                 self: "Rock",
                 winsTo: "Scissors",
                 losesTo: "Paper"
             },
             1: {
                 symbol: "✋",
+                button: this.paperBtn,
                 self: "Paper",
                 winsTo: "Rock",
                 losesTo: "Scissors"
             },
             2: {
                 symbol: "✌️",
+                button: this.scissorsBtn,
                 self: "Scissors",
                 winsTo: "Paper",
                 losesTo: "Rock"
@@ -40,6 +46,8 @@ class RpsGame {
         this.compScore = 0;
         this.genSymbol = RpsGame.symbolGenerator();
         this.animateIntervalID = null;
+        this.selectedHand = null;
+        this.selectedAnimation = null;
     }
 
     handleClick(event) {
@@ -66,6 +74,8 @@ class RpsGame {
         this.ongoing = false;
         this.playerScore = 0;
         this.compScore = 0;
+        this.selectedHand = null;
+        this.selectedAnimation = null;
 
         this.playBtn.textContent = "Play Game"
         this.compChoiceDisplay.textContent = "✌️";
@@ -86,6 +96,22 @@ class RpsGame {
 
         this.stopChoiceAnim();
         this.compChoiceDisplay.textContent = compChoice.symbol;
+
+        this.compChoiceDisplay.classList.add("pop");
+        setTimeout(() => this.compChoiceDisplay.classList.remove("pop"), 300);
+
+        if (this.selectedAnimation) {
+            this.selectedAnimation.cancel();
+        }
+
+        this.selectedHand = playerChoice.button;
+        this.selectedAnimation = this.selectedHand.animate([
+            { transform: 'scale(1)' },
+            { transform: 'scale(1.2)' },
+            { transform: 'scale(1)' }
+            ],
+            {duration: 800,iterations: Infinity, easing: 'ease-out'}
+        );
 
         this.updateBtnState(roundResult);
         this.updateScore(roundResult);
@@ -122,6 +148,7 @@ class RpsGame {
 
     handleGameOver() {
         this.selectionBtns.forEach(btn => btn.disabled = true);
+        this.selectedAnimation.cancel();
 
         if (this.playerScore === 5) {
             this.gameDisplay.classList.add("win");
@@ -151,7 +178,7 @@ class RpsGame {
     }
 
     updateBtnState(state) {
-        const currentState = this.selectionBtns[0].className.trim().split(' ').pop();
+        const currentState = this.rockBtn.className.trim().split(' ').pop();
         this.selectionBtns.forEach(btn => btn.classList.replace(currentState, state));
     }
 
